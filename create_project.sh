@@ -12,7 +12,7 @@
 
 mkdir "$1"
 cd "$1"
-mkdir ./scripts/ ./bash/ ./input/ ./output/ ./logs/
+mkdir scripts bash input output logs
 mkdir datasets general_scripts bin
 > readme.txt
 cd ./bash/
