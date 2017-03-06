@@ -1,7 +1,8 @@
 from sklearn import svm
-from sklearn.model_selection import train_test_split
+
 
 f=open("./datasets/buried_exposed_alpha+beta.3line.txt")
+
 list_cont = f.readlines()
 window_size=3 ###shorter than each seq
 
@@ -61,6 +62,19 @@ for features in list_feat:
 	for feat in features:			
 		all_feat.append(feat)
 
+#Dividing the data into training (80%) and testing (20%)
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(all_words, all_feat,test_size=0.2)
+
+#cross validation
+from sklearn.model_selection import cross_val_score
+clf=svm.LinearSVC()   			####check different kernels, options (class_weight='balanced')
+scores= cross_val_score(clf,X_train,y_train,cv=5)
+print(1,scores)
 
 #input into SVM
-clf= svm.SVC().fit(all_words,all_feat)
+clf.fit(X_train,y_train)
+prediction = clf.predict(X_test)
+pred_score = clf.score(X_test,y_test)
+print(prediction)
+print(pred_score)
